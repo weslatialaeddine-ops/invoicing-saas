@@ -1,0 +1,21 @@
+# secrets
+
+.env
+
+# Java / Maven / Gradle
+
+target/
+build/
+\*.class
+
+# Node / Angular
+
+node_modules/
+dist/
+.angular/
+
+# IDE
+
+.idea/
+.vscode/
+\*.iml
