@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" \
+  -v app_user="$APP_DB_USER" -v app_password="$APP_DB_PASSWORD" -v owner="$POSTGRES_USER" <<'EOSQL'
+CREATE ROLE :"app_user" LOGIN PASSWORD :'app_password'
+  NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE :"owner" IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO :"app_user";
+EOSQL
